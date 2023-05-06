@@ -1,0 +1,22 @@
+app-id: org.dash.DashCore.Daemon
+runtime: org.freedesktop.Platform
+runtime-version: '20.08'
+sdk: org.freedesktop.Sdk
+command: dashd
+modules:
+  - name: dash-core
+    buildsystem: simple
+    build-commands:
+      - sh build-and-validate.sh
+      - install -Dm755 dashd /app/bin/dashd
+    sources:
+      - type: script
+        dest-filename: build-and-validate.sh
+        commands:
+          - DASH_VERSION="19.0.0"
+          - tar -xzf dashcore-${DASH_VERSION}-x86_64-linux-gnu.tar.gz
+          - cp dashcore-${DASH_VERSION}/bin/dashd .
+      - type: file
+        url: https://github.com/dashpay/dash/releases/download/v19.0.0/dashcore-19.0.0-x86_64-linux-gnu.tar.gz
+        sha256: 0e3d605b8bdadb0debc0c5487676fb575ecf2e22811491ad541ceeea0a8c550d
+
